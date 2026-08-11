@@ -117,7 +117,11 @@ function ProjectsDropdown() {
                   <div className="border border-white/15 bg-[#11110f] p-4 shadow-2xl">
                     <p className="mb-3 border-b border-white/15 pb-3 text-[9px] uppercase tracking-[0.2em] text-white/45">{discipline.title}</p>
                     {discipline.children.map((item) => (
-                      <a key={item} href="#work" className="nested-link flex items-center justify-between border-b border-white/10 py-2.5 text-[13px] last:border-0">
+                      <a
+                        key={item}
+                        href={discipline.title === 'Interiors' && item === 'All' ? '/interior' : '#work'}
+                        className="nested-link flex items-center justify-between border-b border-white/10 py-2.5 text-[13px] last:border-0"
+                      >
                         {item}<Arrow />
                       </a>
                     ))}
@@ -164,7 +168,7 @@ export default function Home() {
             {mobileSection === 'projects' && <div className="pl-3">
               {projectDisciplines.map((discipline) => <div key={discipline.title} className="border-b border-white/10">
                 <button onClick={() => setMobileProject(mobileProject === discipline.title ? null : discipline.title)} className="flex w-full items-center justify-between py-3 text-[15px]">{discipline.title}<Chevron /></button>
-                {mobileProject === discipline.title && <div className="grid grid-cols-2 gap-x-4 pb-3 text-[11px] text-white/55">{discipline.children.map(item => <a key={item} href="#work" onClick={() => setMenuOpen(false)} className="py-2">{item}</a>)}</div>}
+                {mobileProject === discipline.title && <div className="grid grid-cols-2 gap-x-4 pb-3 text-[11px] text-white/55">{discipline.children.map(item => <a key={item} href={discipline.title === 'Interiors' && item === 'All' ? '/interior' : '#work'} onClick={() => setMenuOpen(false)} className="py-2">{item}</a>)}</div>}
               </div>)}
             </div>}
             <div>

@@ -1,6 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
+import { architectureCategories } from '@/data/architecture-projects';
 
 const projects = [
   {
@@ -45,11 +47,13 @@ const projectDisciplines = [
   {
     title: 'Interiors',
     desc: 'Spaces from intimate homes to social destinations',
+    href: '/interior',
     children: ['All', 'Retail', 'Workplace', 'Homes', 'Hotels', 'Leisure'],
   },
   {
     title: 'Architecture',
     desc: 'Buildings rooted in climate, culture and context',
+    href: '/architecture',
     children: ['All', 'Hospitality', 'Institutional', 'Corporate', 'Culture', 'Homes', 'Mixed Use'],
   },
 ];
@@ -106,24 +110,32 @@ function ProjectsDropdown() {
           <div>
             {projectDisciplines.map((discipline) => (
               <div key={discipline.title} className="nested-menu group/nested relative border-b border-white/10 last:border-0">
-                <a href="#work" className="dropdown-link flex items-center gap-5 py-4">
+                <Link href={discipline.href} className="dropdown-link flex items-center gap-5 py-4">
                   <div className="min-w-0 flex-1">
                     <p className="text-[15px] tracking-[-0.02em]">{discipline.title}</p>
                     <p className="mt-1 text-[10px] normal-case tracking-normal text-white/45">{discipline.desc}</p>
                   </div>
                   <Chevron side />
-                </a>
+                </Link>
                 <div className="nested-panel pointer-events-none absolute left-full top-0 w-[230px] pl-3 opacity-0 transition-all duration-250 group-hover/nested:pointer-events-auto group-hover/nested:opacity-100">
                   <div className="border border-white/15 bg-[#11110f] p-4 shadow-2xl">
                     <p className="mb-3 border-b border-white/15 pb-3 text-[9px] uppercase tracking-[0.2em] text-white/45">{discipline.title}</p>
                     {discipline.children.map((item) => (
-                      <a
+                      <Link
                         key={item}
-                        href={discipline.title === 'Interiors' && item === 'All' ? '/interior' : '#work'}
+                        href={
+                          discipline.title === 'Interiors'
+                            ? item === 'All'
+                              ? '/interior'
+                              : '/interior'
+                            : item === 'All'
+                              ? '/architecture'
+                              : `/architecture/${item.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`
+                        }
                         className="nested-link flex items-center justify-between border-b border-white/10 py-2.5 text-[13px] last:border-0"
                       >
                         {item}<Arrow />
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -168,7 +180,24 @@ export default function Home() {
             {mobileSection === 'projects' && <div className="pl-3">
               {projectDisciplines.map((discipline) => <div key={discipline.title} className="border-b border-white/10">
                 <button onClick={() => setMobileProject(mobileProject === discipline.title ? null : discipline.title)} className="flex w-full items-center justify-between py-3 text-[15px]">{discipline.title}<Chevron /></button>
-                {mobileProject === discipline.title && <div className="grid grid-cols-2 gap-x-4 pb-3 text-[11px] text-white/55">{discipline.children.map(item => <a key={item} href={discipline.title === 'Interiors' && item === 'All' ? '/interior' : '#work'} onClick={() => setMenuOpen(false)} className="py-2">{item}</a>)}</div>}
+                {mobileProject === discipline.title && <div className="grid grid-cols-2 gap-x-4 pb-3 text-[11px] text-white/55">
+                  {discipline.children.map((item) => (
+                    <Link
+                      key={item}
+                      href={
+                        discipline.title === 'Interiors'
+                          ? '/interior'
+                          : item === 'All'
+                            ? '/architecture'
+                            : `/architecture/${item.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`
+                      }
+                      onClick={() => setMenuOpen(false)}
+                      className="py-2"
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                </div>}
               </div>)}
             </div>}
             <div>

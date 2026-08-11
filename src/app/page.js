@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { architectureCategories } from "@/data/architecture-projects";
 
 const projects = [
   {
@@ -48,29 +47,6 @@ const projects = [
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=88",
     span: "md:col-span-7",
     ratio: "aspect-[4/5] md:aspect-[7/5]",
-  },
-];
-
-const projectDisciplines = [
-  {
-    title: "Interiors",
-    desc: "Spaces from intimate homes to social destinations",
-    href: "/interior",
-    children: ["All", "Retail", "Workplace", "Homes", "Hotels", "Leisure"],
-  },
-  {
-    title: "Architecture",
-    desc: "Buildings rooted in climate, culture and context",
-    href: "/architecture",
-    children: [
-      "All",
-      "Hospitality",
-      "Institutional",
-      "Corporate",
-      "Culture",
-      "Homes",
-      "Mixed Use",
-    ],
   },
 ];
 
@@ -134,84 +110,9 @@ function Dropdown({ label, items, eyebrow, href = "#about" }) {
   );
 }
 
-function ProjectsDropdown() {
-  const interiorHref = (item) => {
-    const category = item.toLowerCase();
-    return `/interior?category=${encodeURIComponent(item)}`;
-  };
-
-  return (
-    <div className="nav-dropdown group relative h-full">
-      <button className="nav-trigger flex h-full items-center text-[11px] font-semibold uppercase tracking-[0.16em]">
-        Projects
-        <Chevron />
-      </button>
-      <div className="dropdown-panel pointer-events-none absolute left-1/2 top-full w-[430px] -translate-x-1/2 pt-3 opacity-0 transition-all duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
-        <div className="border border-white/15 bg-[#11110f] p-6 text-white shadow-2xl">
-          <p className="mb-5 border-b border-white/15 pb-3 text-[9px] uppercase tracking-[0.22em] text-white/45">
-            Explore by discipline
-          </p>
-          <div>
-            {projectDisciplines.map((discipline) => (
-              <div
-                key={discipline.title}
-                className="nested-menu group/nested relative border-b border-white/10 last:border-0"
-              >
-                <Link
-                  href={discipline.href}
-                  className="dropdown-link flex items-center gap-5 py-4"
-                >
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[15px] tracking-[-0.02em]">
-                      {discipline.title}
-                    </p>
-                    <p className="mt-1 text-[10px] normal-case tracking-normal text-white/45">
-                      {discipline.desc}
-                    </p>
-                  </div>
-                  <Chevron side />
-                </Link>
-                <div className="nested-panel pointer-events-none absolute left-full top-0 w-[230px] pl-3 opacity-0 transition-all duration-250 group-hover/nested:pointer-events-auto group-hover/nested:opacity-100">
-                  <div className="border border-white/15 bg-[#11110f] p-4 shadow-2xl">
-                    <p className="mb-3 border-b border-white/15 pb-3 text-[9px] uppercase tracking-[0.2em] text-white/45">
-                      {discipline.title}
-                    </p>
-                    {discipline.children.map((item) => (
-                      <Link
-                        key={item}
-                        href={
-                          discipline.title === "Interiors"
-                            ? item === "All"
-                              ? "/interior"
-                              : "/interior"
-                            : item === "All"
-                              ? "/architecture"
-                              : `/architecture/${item
-                                  .toLowerCase()
-                                  .replace(/\s+/g, "-")
-                                  .replace(/[^a-z0-9-]/g, "")}`
-                        }
-                        className="nested-link flex items-center justify-between border-b border-white/10 py-2.5 text-[13px] last:border-0"
-                      >
-                        {item}
-                        <Arrow />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState(null);
-  const [mobileProject, setMobileProject] = useState(null);
 
   const toggleSection = (name) =>
     setMobileSection(mobileSection === name ? null : name);
@@ -225,7 +126,9 @@ export default function Home() {
           </a>
 
           <nav className="hidden h-full items-center gap-8 md:flex">
-            <ProjectsDropdown />
+            <Link href="/projects" className="nav-trigger flex h-full items-center text-[11px] font-semibold uppercase tracking-[0.16em]">
+              Projects
+            </Link>
             <Dropdown label="About" items={aboutMenu} eyebrow="Inside AXIS" />
             <a
               href="/contact"
@@ -245,59 +148,9 @@ export default function Home() {
 
         {menuOpen && (
           <div className="mx-4 mt-2 max-h-[80vh] overflow-y-auto rounded-[24px] border border-white/15 bg-[#11110f] p-5 text-white shadow-2xl md:hidden">
-            <button
-              onClick={() => toggleSection("projects")}
-              className="flex w-full items-center justify-between border-b border-white/10 py-3 text-xl tracking-[-0.03em]"
-            >
-              Projects <Chevron />
-            </button>
-            {mobileSection === "projects" && (
-              <div className="pl-3">
-                {projectDisciplines.map((discipline) => (
-                  <div
-                    key={discipline.title}
-                    className="border-b border-white/10"
-                  >
-                    <button
-                      onClick={() =>
-                        setMobileProject(
-                          mobileProject === discipline.title
-                            ? null
-                            : discipline.title,
-                        )
-                      }
-                      className="flex w-full items-center justify-between py-3 text-[15px]"
-                    >
-                      {discipline.title}
-                      <Chevron />
-                    </button>
-                    {mobileProject === discipline.title && (
-                      <div className="grid grid-cols-2 gap-x-4 pb-3 text-[11px] text-white/55">
-                        {discipline.children.map((item) => (
-                          <Link
-                            key={item}
-                            href={
-                              discipline.title === "Interiors"
-                                ? "/interior"
-                                : item === "All"
-                                  ? "/architecture"
-                                  : `/architecture/${item
-                                      .toLowerCase()
-                                      .replace(/\s+/g, "-")
-                                      .replace(/[^a-z0-9-]/g, "")}`
-                            }
-                            onClick={() => setMenuOpen(false)}
-                            className="py-2"
-                          >
-                            {item}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+            <a href="/projects" onClick={() => setMenuOpen(false)} className="flex w-full items-center justify-between border-b border-white/10 py-3 text-xl tracking-[-0.03em]">
+              Projects <Arrow />
+            </a>
             <div>
               <button
                 onClick={() => toggleSection("about")}

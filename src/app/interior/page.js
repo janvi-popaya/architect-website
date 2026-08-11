@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { use, useMemo, useState } from 'react';
 
 const interiorProjects = [
   {
@@ -39,57 +39,98 @@ const interiorProjects = [
     category: 'Retail',
     image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=90',
   },
+  {
+    title: 'Lane Market',
+    location: 'Jaipur, India',
+    category: 'Retail',
+    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Maison Textures',
+    location: 'Surat, India',
+    category: 'Retail',
+    image: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'North Desk',
+    location: 'Mumbai, India',
+    category: 'Workplace',
+    image: 'https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Studio 47',
+    location: 'Pune, India',
+    category: 'Workplace',
+    image: 'https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Pulse Office',
+    location: 'Noida, India',
+    category: 'Workplace',
+    image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'House of Quiet',
+    location: 'Coimbatore, India',
+    category: 'Homes',
+    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Verandah House',
+    location: 'Bhopal, India',
+    category: 'Homes',
+    image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Courtyard Residence',
+    location: 'Nashik, India',
+    category: 'Homes',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Monsoon Suites',
+    location: 'Mysuru, India',
+    category: 'Hotels',
+    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Palm Retreat',
+    location: 'Kochi, India',
+    category: 'Hotels',
+    image: 'https://images.unsplash.com/photo-1582719478185-2f2d1ad4bf58?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Sandstone Inn',
+    location: 'Jodhpur, India',
+    category: 'Hotels',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Courtside Club',
+    location: 'Chennai, India',
+    category: 'Leisure',
+    image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Sky Lounge',
+    location: 'Panaji, India',
+    category: 'Leisure',
+    image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1600&q=90',
+  },
+  {
+    title: 'Club Horizon',
+    location: 'Lonavala, India',
+    category: 'Leisure',
+    image: 'https://images.unsplash.com/photo-1502919284671-1bf0bcd1a4c8?auto=format&fit=crop&w=1600&q=90',
+  },
 ];
 
-function SmoothCursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    let frame = 0;
-    let target = { x: -100, y: -100 };
-    let current = { x: -100, y: -100 };
-
-    const animate = () => {
-      current = {
-        x: current.x + (target.x - current.x) * 0.16,
-        y: current.y + (target.y - current.y) * 0.16,
-      };
-      setPosition(current);
-      frame = window.requestAnimationFrame(animate);
-    };
-
-    const move = (event) => {
-      target = { x: event.clientX, y: event.clientY };
-      setVisible(true);
-    };
-
-    const leave = () => setVisible(false);
-
-    window.addEventListener('mousemove', move);
-    window.addEventListener('mouseleave', leave);
-    frame = window.requestAnimationFrame(animate);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener('mousemove', move);
-      window.removeEventListener('mouseleave', leave);
-    };
-  }, []);
-
-  return (
-    <div
-      aria-hidden="true"
-      className={`pointer-events-none fixed left-0 top-0 z-50 hidden h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black/35 bg-black/10 backdrop-blur-sm transition-[opacity,transform] duration-200 md:block ${
-        visible ? 'opacity-100' : 'opacity-0'
-      }`}
-      style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)` }}
-    />
+export default function InteriorAllPage({ searchParams }) {
+  const resolvedSearchParams = use(searchParams);
+  const initialCategory = resolvedSearchParams?.category;
+  const [activeCategory, setActiveCategory] = useState(
+    ['All', 'Retail', 'Workplace', 'Homes', 'Hotels', 'Leisure'].includes(initialCategory) ? initialCategory : 'All',
   );
-}
-
-export default function InteriorAllPage() {
-  const [activeCategory, setActiveCategory] = useState('All');
 
   const categories = useMemo(() => ['All', 'Retail', 'Workplace', 'Homes', 'Hotels', 'Leisure'], []);
 
@@ -100,8 +141,6 @@ export default function InteriorAllPage() {
 
   return (
     <main className="min-h-screen bg-[#f4efe6] text-[#11110f]">
-      <SmoothCursor />
-
       <section className="relative overflow-hidden border-b border-black/10 bg-[#11110f] px-5 pb-12 pt-24 text-white md:px-10 md:pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(208,195,173,0.16),transparent_35%)]" />
         <div className="relative mx-auto max-w-7xl">
@@ -129,10 +168,11 @@ export default function InteriorAllPage() {
               key={category}
               type="button"
               onClick={() => setActiveCategory(category)}
+              aria-pressed={activeCategory === category}
               className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] transition-all ${
                 activeCategory === category
-                  ? 'border-black bg-black text-white'
-                  : 'border-black/15 bg-white/70 text-black/65 hover:border-black/30 hover:text-black'
+                  ? 'border-black bg-black !text-white'
+                  : 'border-black/15 bg-white/70 text-black/65 hover:border-black/30 hover:bg-black hover:!text-white focus:bg-black focus:!text-white active:bg-black active:!text-white'
               }`}
             >
               {category}

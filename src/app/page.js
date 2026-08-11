@@ -95,6 +95,11 @@ function Dropdown({ label, items, eyebrow, href = '#about' }) {
 }
 
 function ProjectsDropdown() {
+  const interiorHref = (item) => {
+    const category = item.toLowerCase();
+    return `/interior?category=${encodeURIComponent(item)}`;
+  };
+
   return (
     <div className="nav-dropdown group relative h-full">
       <button className="nav-trigger flex h-full items-center text-[11px] font-semibold uppercase tracking-[0.16em]">
@@ -119,7 +124,7 @@ function ProjectsDropdown() {
                     {discipline.children.map((item) => (
                       <a
                         key={item}
-                        href={discipline.title === 'Interiors' && item === 'All' ? '/interior' : '#work'}
+                        href={discipline.title === 'Interiors' ? interiorHref(item) : '#work'}
                         className="nested-link flex items-center justify-between border-b border-white/10 py-2.5 text-[13px] last:border-0"
                       >
                         {item}<Arrow />
@@ -168,7 +173,7 @@ export default function Home() {
             {mobileSection === 'projects' && <div className="pl-3">
               {projectDisciplines.map((discipline) => <div key={discipline.title} className="border-b border-white/10">
                 <button onClick={() => setMobileProject(mobileProject === discipline.title ? null : discipline.title)} className="flex w-full items-center justify-between py-3 text-[15px]">{discipline.title}<Chevron /></button>
-                {mobileProject === discipline.title && <div className="grid grid-cols-2 gap-x-4 pb-3 text-[11px] text-white/55">{discipline.children.map(item => <a key={item} href={discipline.title === 'Interiors' && item === 'All' ? '/interior' : '#work'} onClick={() => setMenuOpen(false)} className="py-2">{item}</a>)}</div>}
+                {mobileProject === discipline.title && <div className="grid grid-cols-2 gap-x-4 pb-3 text-[11px] text-white/55">{discipline.children.map(item => <a key={item} href={discipline.title === 'Interiors' ? `/interior?category=${encodeURIComponent(item)}` : '#work'} onClick={() => setMenuOpen(false)} className="py-2">{item}</a>)}</div>}
               </div>)}
             </div>}
             <div>

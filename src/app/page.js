@@ -228,7 +228,7 @@ export default function Home() {
             <ProjectsDropdown />
             <Dropdown label="About" items={aboutMenu} eyebrow="Inside AXIS" />
             <a
-              href="#contact"
+              href="/contact"
               className="contact-pill inline-flex items-center gap-2 rounded-full border border-white/35 px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-white hover:text-[#11110f]"
             >
               Contact us <Arrow />
@@ -322,7 +322,7 @@ export default function Home() {
               )}
             </div>
             <a
-              href="#contact"
+              href="/contact"
               onClick={() => setMenuOpen(false)}
               className="mt-5 flex items-center justify-between rounded-full border border-white/30 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]"
             >

@@ -1,12 +1,16 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 
 function Arrow() {
   return <span aria-hidden="true" className="text-[1.05em]">-&gt;</span>;
 }
 
 export function SiteHeader({ menuOpen, setMenuOpen }) {
+  const [internalMenuOpen, setInternalMenuOpen] = useState(false);
+  const isMenuOpen = menuOpen ?? internalMenuOpen;
+  const updateMenuOpen = setMenuOpen ?? setInternalMenuOpen;
   return (
     <header className="fixed inset-x-0 top-0 z-50 text-white">
       <div className="nav-shell mx-4 mt-4 flex h-14 items-center justify-between rounded-full border border-white/20 bg-[#11110f]/90 px-5 md:mx-7 md:mt-5 md:h-16 md:px-7">
@@ -16,13 +20,13 @@ export function SiteHeader({ menuOpen, setMenuOpen }) {
           <Link href="/about" className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">About</Link>
           <Link href="/contact" className="contact-pill inline-flex items-center gap-2 rounded-full border border-white/35 px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-white hover:text-[#11110f]">Contact us <Arrow /></Link>
         </nav>
-        <button onClick={() => setMenuOpen(!menuOpen)} className="text-[10px] font-semibold uppercase tracking-[0.16em] md:hidden">{menuOpen ? 'Close' : 'Menu'}</button>
+        <button onClick={() => updateMenuOpen(!isMenuOpen)} className="text-[10px] font-semibold uppercase tracking-[0.16em] md:hidden">{isMenuOpen ? 'Close' : 'Menu'}</button>
       </div>
-      {menuOpen && (
+      {isMenuOpen && (
         <div className="mx-4 mt-2 max-h-[80vh] overflow-y-auto rounded-[24px] border border-white/15 bg-[#11110f] p-5 text-white shadow-2xl md:hidden">
-          <Link href="/projects" onClick={() => setMenuOpen(false)} className="flex w-full items-center justify-between border-b border-white/10 py-3 text-xl tracking-[-0.03em]">Projects <Arrow /></Link>
-          <Link href="/about" onClick={() => setMenuOpen(false)} className="flex w-full items-center justify-between border-b border-white/10 py-3 text-xl tracking-[-0.03em]">About <Arrow /></Link>
-          <Link href="/contact" onClick={() => setMenuOpen(false)} className="mt-5 flex items-center justify-between rounded-full border border-white/30 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]">Contact us <Arrow /></Link>
+          <Link href="/projects" onClick={() => updateMenuOpen(false)} className="flex w-full items-center justify-between border-b border-white/10 py-3 text-xl tracking-[-0.03em]">Projects <Arrow /></Link>
+          <Link href="/about" onClick={() => updateMenuOpen(false)} className="flex w-full items-center justify-between border-b border-white/10 py-3 text-xl tracking-[-0.03em]">About <Arrow /></Link>
+          <Link href="/contact" onClick={() => updateMenuOpen(false)} className="mt-5 flex items-center justify-between rounded-full border border-white/30 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]">Contact us <Arrow /></Link>
         </div>
       )}
     </header>
@@ -41,7 +45,7 @@ export function SiteFooter() {
         <div className="md:col-span-5 md:pt-1">
           <div className="border-b border-black/25 pb-7">
             <p className="section-label">Client note</p>
-            <blockquote className="serif mt-4 max-w-xl text-2xl italic leading-[1.2] tracking-[-0.025em] text-black/72 md:text-3xl">"They understood that restraint can be more memorable than spectacle."</blockquote>
+            <blockquote className="serif mt-4 max-w-xl text-2xl italic leading-[1.2] tracking-[-0.025em] text-black/72 md:text-3xl">&ldquo;They understood that restraint can be more memorable than spectacle.&rdquo;</blockquote>
             <p className="mt-4 text-[9px] uppercase tracking-[0.16em] text-black/45">Private Residential Client · Mumbai</p>
           </div>
           <div className="pt-7">
@@ -61,7 +65,7 @@ export function SiteFooter() {
           <p><a href="#">Instagram</a><br /><a href="#">LinkedIn</a></p>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-[9px] uppercase tracking-[0.15em] text-black/50 md:col-span-4 md:justify-center">
-          <Link href="#about">About</Link><Link href="/interior">Projects</Link><a href="#">Careers</a><a href="#">Privacy</a>
+          <Link href="/about">About</Link><Link href="/projects">Projects</Link><Link href="/careers">Careers</Link><a href="#">Privacy</a>
         </div>
         <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">(c) 2026 AXIS Architecture. All rights reserved.</p>
       </div>

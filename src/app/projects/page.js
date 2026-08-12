@@ -1,49 +1,19 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { architectureProjects } from '@/data/architecture-projects';
+import { projects } from '@/data/projects';
 import { SiteFooter, SiteHeader } from '@/components/site-frame';
-import { ProjectModal } from '@/components/project-modal';
-
-const interiorProjects = [
-  { title: 'The Grain Room', location: 'Bengaluru, India', category: 'Retail', image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1600&q=90' },
-  { title: 'Forum 18', location: 'Hyderabad, India', category: 'Retail', image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=90' },
-  { title: 'North Desk', location: 'Mumbai, India', category: 'Workplace', image: 'https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=1600&q=90' },
-  { title: 'House of Quiet', location: 'Coimbatore, India', category: 'Homes', image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=90' },
-  { title: 'Monsoon Suites', location: 'Mysuru, India', category: 'Hotels', image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1600&q=90' },
-  { title: 'Courtside Club', location: 'Chennai, India', category: 'Leisure', image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=90' },
-];
-
-function ProjectCard({ project, eyebrow }) {
-  return (
-    <button type="button" className="group relative block w-full overflow-hidden rounded-[28px] border border-black/10 bg-black/5 text-left shadow-[0_20px_60px_rgba(17,17,15,0.08)]">
-      <div className="aspect-[4/5] overflow-hidden md:aspect-[6/5]">
-        <img src={project.image} alt={project.title} className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/12 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="absolute inset-x-0 bottom-0 p-5 text-white md:p-6">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/65">{eyebrow}</p>
-        <div className="mt-2 flex items-end justify-between gap-4">
-          <div>
-            <h2 className="text-2xl tracking-[-0.04em] md:text-3xl">{project.title}</h2>
-            <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-white/60">{project.location}</p>
-          </div>
-        </div>
-      </div>
-    </button>
-  );
-}
+import { ProjectCard } from '@/components/projects/project-card';
 
 export default function ProjectsPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
-  const [activeProject, setActiveProject] = useState(null);
   const [isSwitching, setIsSwitching] = useState(false);
   const mixedProjects = useMemo(
     () => [
-      ...architectureProjects.slice(0, 6).map((project) => ({ ...project, group: 'Architecture' })),
-      ...interiorProjects.map((project) => ({ ...project, group: 'Interiors' })),
+      ...projects.filter((project) => project.group === 'Architecture').slice(0, 6),
+      ...projects.filter((project) => project.group === 'Interiors'),
     ],
     [],
   );
@@ -107,14 +77,11 @@ export default function ProjectsPage() {
         <div className={`mx-auto grid max-w-7xl gap-5 md:grid-cols-12 md:gap-6 transition-all duration-300 ${isSwitching ? 'opacity-0 translate-y-3' : 'opacity-100 translate-y-0'}`}>
           {filteredProjects.map((project, index) => (
             <div key={`${project.group}-${project.title}-${project.location}`} className={spans[index % spans.length]}>
-              <div onClick={() => setActiveProject(project)}>
-                <ProjectCard project={project} eyebrow={project.group} />
-              </div>
+              <ProjectCard project={project} />
             </div>
           ))}
         </div>
       </section>
-      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} eyebrow="All projects" />
       <SiteFooter />
     </main>
   );

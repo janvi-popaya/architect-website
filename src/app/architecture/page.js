@@ -3,34 +3,12 @@
 import { useMemo, useState } from 'react';
 import { architectureCategories, getArchitectureProjects, architectureHeroCopy } from '@/data/architecture-projects';
 import { SiteFooter, SiteHeader } from '@/components/site-frame';
-import { ProjectModal } from '@/components/project-modal';
-
-function ProjectCard({ project }) {
-  return (
-    <button type="button" className="group relative block w-full overflow-hidden rounded-[28px] border border-black/10 bg-black/5 text-left shadow-[0_20px_60px_rgba(17,17,15,0.08)]">
-      <div className="aspect-[4/5] overflow-hidden md:aspect-[6/5]">
-        <img src={project.image} alt={project.title} className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/12 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="absolute inset-x-0 bottom-0 p-5 text-white md:p-6">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/65">{project.category}</p>
-        <div className="mt-2 flex items-end justify-between gap-4">
-          <div>
-            <h2 className="text-2xl tracking-[-0.04em] md:text-3xl">{project.title}</h2>
-            <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-white/60">{project.location}</p>
-          </div>
-          <span className="hidden rounded-full border border-white/25 px-3 py-1 text-[9px] uppercase tracking-[0.18em] text-white/70 md:inline-flex">View project</span>
-        </div>
-      </div>
-    </button>
-  );
-}
+import { ProjectCard } from '@/components/projects/project-card';
 
 export default function ArchitectureIndexPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
-  const [activeProject, setActiveProject] = useState(null);
   const [isSwitching, setIsSwitching] = useState(false);
   const projects = useMemo(() => getArchitectureProjects(activeCategory), [activeCategory]);
   const spans = ['md:col-span-7 md:row-span-2', 'md:col-span-5', 'md:col-span-5', 'md:col-span-7 md:row-span-2', 'md:col-span-6', 'md:col-span-6'];
@@ -74,14 +52,11 @@ export default function ArchitectureIndexPage() {
         <div className={`mx-auto grid max-w-7xl gap-5 md:grid-cols-12 md:gap-6 transition-all duration-300 ${isSwitching ? 'opacity-0 translate-y-3' : 'opacity-100 translate-y-0'}`}>
           {projects.map((project, index) => (
             <div key={`${project.title}-${project.location}`} className={`${spans[index % spans.length]} ${index % 4 === 0 || index % 4 === 3 ? 'md:pt-4' : ''}`}>
-              <div onClick={() => setActiveProject(project)}>
-                <ProjectCard project={project} />
-              </div>
+              <ProjectCard project={project} />
             </div>
           ))}
         </div>
       </section>
-      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} eyebrow="Architecture project" />
       <SiteFooter />
     </main>
   );

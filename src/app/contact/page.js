@@ -98,7 +98,7 @@ function SiteFooter() {
           <p><a href="#">Instagram</a><br /><a href="#">LinkedIn</a></p>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-[9px] uppercase tracking-[0.15em] text-black/50 md:col-span-4 md:justify-center">
-          <Link href="#about">About</Link><Link href="/interior">Projects</Link><a href="#">Careers</a><a href="#">Privacy</a>
+          <Link href="/about">About</Link><Link href="/projects">Projects</Link><Link href="/careers">Careers</Link><a href="#">Privacy</a>
         </div>
         <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">© 2026 AXIS Architecture. All rights reserved.</p>
       </div>
@@ -177,7 +177,12 @@ export default function ContactPage() {
                   <p className="mt-4 text-2xl tracking-[-0.04em] md:text-3xl">Andheri West, Mumbai</p>
                   <p className="mt-3 max-w-sm text-sm leading-6 text-black/60">Open for meetings by appointment. Click the pin to open the location in Maps.</p>
                 </div>
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 bg-[#11110f] text-white transition-transform group-hover:rotate-12">⌖</span>
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 bg-[#11110f] text-white transition-transform group-hover:-translate-y-1" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+                    <circle cx="12" cy="10" r="2.5" />
+                  </svg>
+                </span>
               </div>
               <p className="mt-5 text-[10px] uppercase tracking-[0.18em] text-black/45">Open in Google Maps</p>
             </a>

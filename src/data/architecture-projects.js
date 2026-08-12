@@ -8,7 +8,7 @@ export const architectureCategories = [
   { slug: 'mixed-use', label: 'Mixed Use' },
 ];
 
-export const architectureProjects = [
+const architectureProjectEntries = [
   { title: 'House / 17', location: 'Alibaug, India', category: 'Homes', slug: 'homes', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=90' },
   { title: 'Sand Courtyard', location: 'Bengaluru, India', category: 'Homes', slug: 'homes', image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=90' },
   { title: 'Skyline House', location: 'Pune, India', category: 'Homes', slug: 'homes', image: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1600&q=90' },
@@ -40,6 +40,36 @@ export const architectureProjects = [
   { title: 'Transit House', location: 'Bengaluru, India', category: 'Mixed Use', slug: 'mixed-use', image: 'https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1600&q=90' },
   { title: 'Market Terrace', location: 'Thane, India', category: 'Mixed Use', slug: 'mixed-use', image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1600&q=90' },
 ];
+
+const galleryImages = [
+  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=90',
+  'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2000&q=90',
+  'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2000&q=90',
+  'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=2000&q=90',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=90',
+];
+
+function toProjectSlug(title) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+export const architectureProjects = architectureProjectEntries.map((project, index) => ({
+  ...project,
+  projectSlug: toProjectSlug(project.title),
+  group: 'Architecture',
+  year: String(2018 + (index % 8)),
+  status: 'Completed',
+  area: `${(3.2 + (index % 7) * 0.8).toFixed(1)}k sq ft`,
+  client: 'Private client',
+  description: `${project.title} is shaped by climate, material restraint and the rhythms of its setting. The project balances generous shared spaces with quieter moments of retreat.`,
+  quote: 'Architecture begins with how a place feels before it is understood.',
+  gallery: [
+    project.image,
+    galleryImages[index % galleryImages.length],
+    galleryImages[(index + 2) % galleryImages.length],
+    galleryImages[(index + 4) % galleryImages.length],
+  ],
+}));
 
 export const architectureHeroCopy = {
   all: 'Mixed architecture project archive.',

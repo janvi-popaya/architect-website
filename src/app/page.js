@@ -148,9 +148,9 @@ export default function Home() {
 
         {menuOpen && (
           <div className="mx-4 mt-2 max-h-[80vh] overflow-y-auto rounded-[24px] border border-white/15 bg-[#11110f] p-5 text-white shadow-2xl md:hidden">
-            <a href="/projects" onClick={() => setMenuOpen(false)} className="flex w-full items-center justify-between border-b border-white/10 py-3 text-xl tracking-[-0.03em]">
+            <Link href="/projects" onClick={() => setMenuOpen(false)} className="flex w-full items-center justify-between border-b border-white/10 py-3 text-xl tracking-[-0.03em]">
               Projects <Arrow />
-            </a>
+            </Link>
             <div>
               <button
                 onClick={() => toggleSection("about")}
@@ -503,9 +503,9 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-[9px] uppercase tracking-[0.15em] text-black/50 md:col-span-4 md:justify-center">
-            <a href="#about">About</a>
-            <a href="#work">Projects</a>
-            <a href="#">Careers</a>
+            <Link href="/about">About</Link>
+            <Link href="/projects">Projects</Link>
+            <Link href="/careers">Careers</Link>
             <a href="#">Privacy</a>
           </div>
           <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">

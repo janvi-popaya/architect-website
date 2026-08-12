@@ -98,7 +98,7 @@ function SiteFooter() {
           <p><a href="#">Instagram</a><br /><a href="#">LinkedIn</a></p>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-[9px] uppercase tracking-[0.15em] text-black/50 md:col-span-4 md:justify-center">
-          <Link href="#about">About</Link><Link href="/interior">Projects</Link><a href="#">Careers</a><a href="#">Privacy</a>
+          <Link href="/about">About</Link><Link href="/projects">Projects</Link><Link href="/careers">Careers</Link><a href="#">Privacy</a>
         </div>
         <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">© 2026 AXIS Architecture. All rights reserved.</p>
       </div>

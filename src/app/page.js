@@ -51,9 +51,9 @@ const projects = [
 ];
 
 const aboutMenu = [
-  ["Team", "People behind the work"],
-  ["Clients", "Collaborators and partnerships"],
-  ["Careers", "Open roles and internships"],
+  { title: "Team", desc: "People behind the work", href: "/team" },
+  { title: "Clients", desc: "Collaborators and partnerships", href: "/clients" },
+  { title: "Careers", desc: "Open roles and internships", href: "/careers" },
 ];
 
 function Arrow() {
@@ -78,7 +78,7 @@ function Chevron({ side = false }) {
 function Dropdown({ label, items, eyebrow, href = "#about" }) {
   return (
     <div className="nav-dropdown group relative h-full">
-      <button className="nav-trigger flex h-full items-center text-[11px] font-semibold uppercase tracking-[0.16em]">
+      <button className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">
         {label}
         <Chevron />
       </button>
@@ -88,10 +88,10 @@ function Dropdown({ label, items, eyebrow, href = "#about" }) {
             {eyebrow}
           </p>
           <div className="space-y-1">
-            {items.map(([title, desc]) => (
-              <a
+            {items.map(({ title, desc, href: itemHref }) => (
+              <Link
                 key={title}
-                href={href}
+                href={itemHref || href}
                 className="dropdown-link grid grid-cols-[1fr_auto] items-center gap-5 border-b border-white/10 py-3 last:border-0"
               >
                 <div>
@@ -101,7 +101,7 @@ function Dropdown({ label, items, eyebrow, href = "#about" }) {
                   </p>
                 </div>
                 <Arrow />
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -126,10 +126,10 @@ export default function Home() {
           </a>
 
           <nav className="hidden h-full items-center gap-8 md:flex">
-            <Link href="/projects" className="nav-trigger flex h-full items-center text-[11px] font-semibold uppercase tracking-[0.16em]">
+            <Link href="/projects" className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">
               Projects
             </Link>
-            <Dropdown label="About" items={aboutMenu} eyebrow="Inside AXIS" />
+            <Link href="/about" className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">About</Link>
             <a
               href="/contact"
               className="contact-pill inline-flex items-center gap-2 rounded-full border border-white/35 px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-white hover:text-[#11110f]"
@@ -140,7 +140,7 @@ export default function Home() {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="text-[11px] font-semibold uppercase tracking-[0.16em] md:hidden"
+            className="text-[10px] font-semibold uppercase tracking-[0.16em] md:hidden"
           >
             {menuOpen ? "Close" : "Menu"}
           </button>
@@ -160,7 +160,7 @@ export default function Home() {
               </button>
               {mobileSection === "about" && (
                 <div className="pl-3">
-                  {aboutMenu.map(([title]) => (
+                  {aboutMenu.map(({ title }) => (
                     <a
                       key={title}
                       href="#about"
@@ -177,7 +177,7 @@ export default function Home() {
             <a
               href="/contact"
               onClick={() => setMenuOpen(false)}
-              className="mt-5 flex items-center justify-between rounded-full border border-white/30 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]"
+              className="mt-5 flex items-center justify-between rounded-full border border-white/30 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em]"
             >
               Contact us <Arrow />
             </a>
@@ -331,52 +331,76 @@ export default function Home() {
               Recent projects
             </h2>
           </div>
-          <a
-            href="#work"
+          <Link
+            href="/projects"
             className="view-all-link hidden items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.15em] md:inline-flex"
           >
             View all <Arrow />
-          </a>
+          </Link>
         </div>
-        <div className="grid gap-5 md:grid-cols-12 md:gap-6">
-          {projects.map((project) => (
-            <article key={project.title} className={project.span}>
-              <a href="#contact" className="project-card group block">
-                <div
-                  className={`project-image relative overflow-hidden bg-black/5 ${project.ratio}`}
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
-                    <div className="project-copy max-w-md">
-                      <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">
-                        {project.type}
-                      </p>
-                      <h3 className="text-2xl tracking-[-0.035em] md:text-3xl">
-                        {project.title}
-                      </h3>
-                      <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">
-                        {project.blurb}
-                      </p>
-                      <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">
-                        {project.place}
-                      </p>
-                    </div>
+        <div className="grid gap-3 md:grid-cols-12 md:gap-3">
+          <article className="md:col-span-8">
+            <a href="#contact" className="project-card group block">
+              <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/3]">
+                <img src={projects[0].image} alt={projects[0].title} className="h-full w-full object-cover" />
+                <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
+                  <div className="project-copy max-w-md">
+                    <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{projects[0].type}</p>
+                    <h3 className="text-2xl tracking-[-0.035em] md:text-4xl">{projects[0].title}</h3>
+                    <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{projects[0].blurb}</p>
+                    <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{projects[0].place}</p>
                   </div>
                 </div>
-              </a>
-            </article>
-          ))}
+              </div>
+            </a>
+          </article>
+          <article className="md:col-span-4">
+            <a href="#contact" className="project-card group block">
+              <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/5]">
+                <img src={projects[1].image} alt={projects[1].title} className="h-full w-full object-cover" />
+                <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
+                  <div className="project-copy max-w-md">
+                    <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{projects[1].type}</p>
+                    <h3 className="text-2xl tracking-[-0.035em] md:text-3xl">{projects[1].title}</h3>
+                    <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{projects[1].blurb}</p>
+                    <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{projects[1].place}</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+          <article className="md:col-span-4">
+            <a href="#contact" className="project-card group block">
+              <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/5]">
+                <img src={projects[2].image} alt={projects[2].title} className="h-full w-full object-cover" />
+                <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
+                  <div className="project-copy max-w-md">
+                    <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{projects[2].type}</p>
+                    <h3 className="text-2xl tracking-[-0.035em] md:text-3xl">{projects[2].title}</h3>
+                    <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{projects[2].blurb}</p>
+                    <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{projects[2].place}</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+          <article className="md:col-span-8">
+            <a href="#contact" className="project-card group block">
+              <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/3]">
+                <img src={projects[3].image} alt={projects[3].title} className="h-full w-full object-cover" />
+                <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
+                  <div className="project-copy max-w-md">
+                    <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{projects[3].type}</p>
+                    <h3 className="text-2xl tracking-[-0.035em] md:text-3xl">{projects[3].title}</h3>
+                    <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{projects[3].blurb}</p>
+                    <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{projects[3].place}</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
         </div>
-        <a
-          href="#work"
-          className="view-all-link mt-6 inline-flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.15em] md:hidden"
-        >
-          View all <Arrow />
-        </a>
+        <Link href="/projects" className="view-all-link mt-6 inline-flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.15em] md:hidden">View all <Arrow /></Link>
       </section>
 
       <section className="bg-[#151513] px-5 py-14 text-[#f2f0ea] md:px-10 md:py-18">
@@ -492,3 +516,5 @@ export default function Home() {
     </main>
   );
 }
+
+

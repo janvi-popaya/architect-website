@@ -106,7 +106,16 @@ function SiteFooter() {
   );
 }
 
-export default function ContactPage() {
+const teamMembers = [
+  { name: 'Aanya Mehta', role: 'Founder / Principal Architect', location: 'Mumbai' },
+  { name: 'Rahul Desai', role: 'Design Director', location: 'New Delhi' },
+  { name: 'Ishita Rao', role: 'Project Lead', location: 'Bengaluru' },
+  { name: 'Kabir Shah', role: 'Interior Design', location: 'Pune' },
+  { name: 'Meera Nair', role: 'Client Strategy', location: 'Mumbai' },
+  { name: 'Aditya Sen', role: 'Construction Lead', location: 'Ahmedabad' },
+];
+
+export default function TeamPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState(null);
 
@@ -121,15 +130,15 @@ export default function ContactPage() {
         <div className="relative mx-auto max-w-7xl pb-14 md:pb-18">
           <div className="grid gap-8 md:grid-cols-12 md:items-end">
             <div className="md:col-span-8">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/55">Contact</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/55">Team</p>
               <h1 className="mt-5 text-[15vw] leading-[0.9] tracking-[-0.08em] md:text-[8vw]">
-                Let&apos;s start
-                <span className="block font-serif italic text-white/50">the conversation.</span>
+                The people
+                <span className="block font-serif italic text-white/50">behind the work.</span>
               </h1>
             </div>
             <div className="md:col-span-4">
               <p className="max-w-md text-sm leading-6 text-white/72 md:text-[15px]">
-                Share your site, timeline, and the kind of space you want to create. We&apos;ll come back with a thoughtful response and clear next steps.
+                A compact studio team shaping architecture, interiors, and delivery with a shared focus on clarity, precision, and calm.
               </p>
             </div>
           </div>
@@ -137,67 +146,42 @@ export default function ContactPage() {
       </section>
 
       <section className="px-5 py-14 md:px-10 md:py-18">
-        <div className="mx-auto max-w-4xl">
-          <div className="text-center">
-            <p className="section-label">Let&apos;s connect</p>
-            <h2 className="mt-4 text-4xl tracking-[-0.05em] md:text-6xl">Tell us about your project.</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-black/60 md:text-[15px]">Whether it&apos;s architecture, interiors, or a new collaboration, start here and we&apos;ll take it from there.</p>
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 border-b border-black/15 pb-4">
+            <p className="section-label">Studio roster</p>
+            <h2 className="mt-3 text-3xl tracking-[-0.04em] md:text-5xl">Designers, coordinators, and project leads.</h2>
           </div>
 
-          <form className="mt-10 rounded-[32px] border border-black/10 bg-[#ece6db] p-5 shadow-[0_20px_60px_rgba(17,17,15,0.08)] md:p-8">
-            <div className="grid gap-4 md:grid-cols-2">
-              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Name <input className="border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" type="text" placeholder="Your name" /></label>
-              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Email <input className="border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" type="email" placeholder="you@example.com" /></label>
-            </div>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Project type <input className="border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" type="text" placeholder="Architecture, interiors, advisory..." /></label>
-              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Timeline <input className="border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" type="text" placeholder="When are you planning to begin?" /></label>
-            </div>
-            <label className="mt-4 grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Message <textarea className="min-h-[180px] border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" placeholder="Tell us about your site, location, goals, and anything else we should know." /></label>
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 pt-5">
-              <p className="text-[10px] uppercase tracking-[0.18em] text-black/45">We usually reply within 2 business days.</p>
-              <button type="submit" className="contact-pill inline-flex items-center gap-2 rounded-full border border-black/35 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-black hover:text-white">Send message <Arrow /></button>
-            </div>
-          </form>
+          <div className="grid gap-5 md:grid-cols-12 md:gap-6">
+            {teamMembers.map((member, index) => (
+              <article key={member.name} className={`${index < 2 ? 'md:col-span-6' : 'md:col-span-4'}`}>
+                <div className="group rounded-[28px] border border-black/10 bg-white/70 p-6 transition-transform hover:-translate-y-1">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="section-label">{member.role}</p>
+                      <h3 className="mt-3 text-2xl tracking-[-0.04em] md:text-3xl">{member.name}</h3>
+                      <p className="mt-3 text-sm leading-6 text-black/60">{member.location}</p>
+                    </div>
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 bg-[#11110f] text-white transition-transform group-hover:rotate-12">↗</span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="px-5 pb-14 md:px-10 md:pb-18">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-6 border-b border-black/15 pb-4">
-            <p className="section-label">Our office</p>
-            <h2 className="mt-3 text-3xl tracking-[-0.04em] md:text-5xl">Visit, call, or find us on the map.</h2>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-12 md:gap-6">
-            <a href="https://maps.google.com/?q=Mumbai+India" target="_blank" rel="noreferrer" className="group rounded-[28px] border border-black/10 bg-white/70 p-6 transition-transform hover:-translate-y-1 md:col-span-5">
-              <div className="flex items-start justify-between gap-6">
-                <div>
-                  <p className="section-label">Mumbai studio</p>
-                  <p className="mt-4 text-2xl tracking-[-0.04em] md:text-3xl">Andheri West, Mumbai</p>
-                  <p className="mt-3 max-w-sm text-sm leading-6 text-black/60">Open for meetings by appointment. Click the pin to open the location in Maps.</p>
-                </div>
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 bg-[#11110f] text-white transition-transform group-hover:rotate-12">⌖</span>
-              </div>
-              <p className="mt-5 text-[10px] uppercase tracking-[0.18em] text-black/45">Open in Google Maps</p>
-            </a>
-
-            <div className="grid gap-5 md:col-span-7">
-              <div className="rounded-[28px] border border-black/10 bg-[#ece6db] p-6">
-                <p className="section-label">Phone</p>
-                <a href="tel:+919876543210" className="mt-4 block text-2xl tracking-[-0.04em] md:text-3xl">+91 98765 43210</a>
-                <p className="mt-3 text-sm leading-6 text-black/60">Available Monday to Friday, 10:00 AM to 6:00 PM.</p>
-              </div>
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="rounded-[28px] border border-black/10 bg-white/60 p-6">
-                  <p className="section-label">Email</p>
-                  <a href="mailto:hello@axis.studio" className="mt-4 block text-2xl tracking-[-0.04em] md:text-3xl">hello@axis.studio</a>
-                </div>
-                <div className="rounded-[28px] border border-black/10 bg-white/60 p-6">
-                  <p className="section-label">Response</p>
-                  <p className="mt-4 text-2xl tracking-[-0.04em] md:text-3xl">2 business days</p>
-                </div>
-              </div>
+        <div className="mx-auto max-w-7xl rounded-[32px] border border-black/10 bg-[#ece6db] p-6 md:p-8">
+          <div className="grid gap-6 md:grid-cols-12 md:items-center">
+            <div className="md:col-span-7">
+              <p className="section-label">Working style</p>
+              <h2 className="mt-3 text-3xl tracking-[-0.04em] md:text-5xl">Small team, close collaboration, direct communication.</h2>
+            </div>
+            <div className="md:col-span-5">
+              <p className="text-sm leading-6 text-black/60">
+                We keep the process lean so decisions stay clear and the work stays responsive from concept through delivery.
+              </p>
             </div>
           </div>
         </div>

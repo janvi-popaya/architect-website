@@ -2,64 +2,19 @@
 
 import Link from "next/link";
 import { useState } from "react";
-
-const projects = [
-  {
-    title: "House / 17",
-    place: "Alibaug, India",
-    type: "Architecture · Homes",
-    blurb:
-      "A coastal home shaped by shaded courts, soft daylight and framed landscape views.",
-    image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=88",
-    span: "md:col-span-7",
-    ratio: "aspect-[4/5] md:aspect-[7/5]",
-  },
-  {
-    title: "Courtyard Office",
-    place: "Ahmedabad, India",
-    type: "Interiors · Workplace",
-    blurb:
-      "A calm, collaborative workplace organised around daylight, tactility and planted thresholds.",
-    image:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=88",
-    span: "md:col-span-5",
-    ratio: "aspect-[4/5] md:aspect-[5/6]",
-  },
-  {
-    title: "The Quiet Hotel",
-    place: "Udaipur, India",
-    type: "Architecture · Hospitality",
-    blurb:
-      "A low-slung retreat where local stone, water and shadow create a slower rhythm of arrival.",
-    image:
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=88",
-    span: "md:col-span-5",
-    ratio: "aspect-[4/5] md:aspect-[5/6]",
-  },
-  {
-    title: "Brick / Light",
-    place: "New Delhi, India",
-    type: "Architecture · Culture",
-    blurb:
-      "An existing brick shell transformed through new openings, layered light and generous public rooms.",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=88",
-    span: "md:col-span-7",
-    ratio: "aspect-[4/5] md:aspect-[7/5]",
-  },
-];
+import { BrandLogo } from "@/components/brand-logo";
+import { SiteFooter } from "@/components/site-frame";
+import { projects } from "@/data/projects";
 
 const aboutMenu = [
   { title: "Team", desc: "People behind the work", href: "/team" },
   { title: "Clients", desc: "Collaborators and partnerships", href: "/clients" },
-  { title: "Careers", desc: "Open roles and internships", href: "/careers" },
 ];
 
 function Arrow() {
   return (
     <span aria-hidden="true" className="text-[1.05em]">
-      ↗
+      &#8599;
     </span>
   );
 }
@@ -70,7 +25,7 @@ function Chevron({ side = false }) {
       aria-hidden="true"
       className={`text-[9px] transition-transform duration-300 ${side ? "ml-auto -rotate-90" : "ml-1 group-hover:rotate-180"}`}
     >
-      ⌄
+      &#8964;
     </span>
   );
 }
@@ -121,9 +76,7 @@ export default function Home() {
     <main className="overflow-hidden">
       <header className="fixed inset-x-0 top-0 z-50 text-white">
         <div className="nav-shell mx-4 mt-4 flex h-14 items-center justify-between rounded-full border border-white/20 bg-[#11110f]/90 px-5 md:mx-7 md:mt-5 md:h-16 md:px-7">
-          <a href="#top" className="text-[12px] font-semibold tracking-[0.2em]">
-            AXIS
-          </a>
+          <BrandLogo href="#top" />
 
           <nav className="hidden h-full items-center gap-8 md:flex">
             <Link href="/projects" className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">
@@ -199,7 +152,7 @@ export default function Home() {
           <div className="mb-5 flex items-end justify-between border-b border-white/35 pb-3 text-[10px] uppercase tracking-[0.18em] md:text-xs">
             <span>Architecture · Interiors</span>
             <span className="hidden md:inline">
-              Mumbai / New Delhi · Est. 2019
+              Mumbai · Est. 2019
             </span>
           </div>
           <div className="grid gap-6 md:grid-cols-12 md:items-end">
@@ -251,7 +204,7 @@ export default function Home() {
       <section id="about" className="px-5 py-12 md:px-10 md:py-16">
         <div className="grid gap-7 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-3">
-            <p className="section-label">About AXIS</p>
+            <p className="section-label">About Joey&apos;s Atelier</p>
             <p className="mt-4 max-w-xs text-sm leading-6 text-black/60">
               A practice grounded in clarity, restraint and spaces that feel
               calm the moment you enter them.
@@ -268,7 +221,7 @@ export default function Home() {
                 </h2>
                 <div className="mt-6 grid gap-6 border-t border-black/20 pt-5 md:grid-cols-2">
                   <p className="text-sm leading-6 text-black/65">
-                    AXIS is an independent architecture and interiors practice
+                    Joey&apos;s Atelier is an independent architecture and interiors practice
                     working across homes, hospitality, culture, workplace and
                     adaptive reuse. Every project starts with context-not a
                     fixed style.
@@ -338,67 +291,24 @@ export default function Home() {
             View all <Arrow />
           </Link>
         </div>
-        <div className="grid gap-3 md:grid-cols-12 md:gap-3">
-          <article className="md:col-span-8">
-            <a href="#contact" className="project-card group block">
-              <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/3]">
-                <img src={projects[0].image} alt={projects[0].title} className="h-full w-full object-cover" />
-                <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
-                  <div className="project-copy max-w-md">
-                    <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{projects[0].type}</p>
-                    <h3 className="text-2xl tracking-[-0.035em] md:text-4xl">{projects[0].title}</h3>
-                    <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{projects[0].blurb}</p>
-                    <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{projects[0].place}</p>
+        <div className="grid gap-3 md:grid-cols-2">
+          {projects.map((project) => (
+            <article key={project.projectSlug}>
+              <Link href={`/projects/${project.projectSlug}`} className="project-card group block">
+                <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/3]">
+                  <img src={project.image} alt={project.title} className="h-full w-full object-cover" />
+                  <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
+                    <div className="project-copy max-w-md">
+                      <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{project.group}</p>
+                      <h3 className="text-2xl tracking-[-0.035em] md:text-4xl">{project.title}</h3>
+                      <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{project.description}</p>
+                      <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{project.location}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
-          </article>
-          <article className="md:col-span-4">
-            <a href="#contact" className="project-card group block">
-              <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/5]">
-                <img src={projects[1].image} alt={projects[1].title} className="h-full w-full object-cover" />
-                <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
-                  <div className="project-copy max-w-md">
-                    <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{projects[1].type}</p>
-                    <h3 className="text-2xl tracking-[-0.035em] md:text-3xl">{projects[1].title}</h3>
-                    <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{projects[1].blurb}</p>
-                    <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{projects[1].place}</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </article>
-          <article className="md:col-span-4">
-            <a href="#contact" className="project-card group block">
-              <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/5]">
-                <img src={projects[2].image} alt={projects[2].title} className="h-full w-full object-cover" />
-                <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
-                  <div className="project-copy max-w-md">
-                    <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{projects[2].type}</p>
-                    <h3 className="text-2xl tracking-[-0.035em] md:text-3xl">{projects[2].title}</h3>
-                    <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{projects[2].blurb}</p>
-                    <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{projects[2].place}</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </article>
-          <article className="md:col-span-8">
-            <a href="#contact" className="project-card group block">
-              <div className="project-image relative aspect-[4/5] overflow-hidden rounded-[26px] bg-black/5 md:aspect-[4/3]">
-                <img src={projects[3].image} alt={projects[3].title} className="h-full w-full object-cover" />
-                <div className="project-overlay absolute inset-0 flex items-end bg-gradient-to-t from-black/82 via-black/15 to-transparent p-5 text-white md:p-6">
-                  <div className="project-copy max-w-md">
-                    <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/65">{projects[3].type}</p>
-                    <h3 className="text-2xl tracking-[-0.035em] md:text-3xl">{projects[3].title}</h3>
-                    <p className="mt-2 max-w-sm text-xs leading-5 text-white/70 md:text-sm">{projects[3].blurb}</p>
-                    <p className="mt-4 text-[9px] uppercase tracking-[0.15em] text-white/55">{projects[3].place}</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </article>
+              </Link>
+            </article>
+          ))}
         </div>
         <Link href="/projects" className="view-all-link mt-6 inline-flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.15em] md:hidden">View all <Arrow /></Link>
       </section>
@@ -423,96 +333,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer
-        id="contact"
-        className="bg-[#cfc7b8] px-5 pb-7 pt-14 md:px-10 md:pb-9 md:pt-16"
-      >
-        <div className="grid gap-10 md:grid-cols-12 md:gap-8">
-          <div className="md:col-span-7">
-            <p className="section-label">Start a conversation</p>
-            <h2 className="mt-5 text-[13vw] leading-[0.82] tracking-[-0.07em] md:text-[7.5vw]">
-              Have a site?
-              <br />
-              <span className="serif italic text-black/50">Let’s talk.</span>
-            </h2>
-            <a
-              href="mailto:hello@axis.studio"
-              className="group mt-8 inline-flex items-center gap-4 border-b border-black/35 pb-2 text-lg md:text-xl"
-            >
-              hello@axis.studio <Arrow />
-            </a>
-          </div>
-
-          <div className="md:col-span-5 md:pt-1">
-            <div className="border-b border-black/25 pb-7">
-              <p className="section-label">Client note</p>
-              <blockquote className="serif mt-4 max-w-xl text-2xl italic leading-[1.2] tracking-[-0.025em] text-black/72 md:text-3xl">
-                “They understood that restraint can be more memorable than
-                spectacle.”
-              </blockquote>
-              <p className="mt-4 text-[9px] uppercase tracking-[0.16em] text-black/45">
-                Private Residential Client · Mumbai
-              </p>
-            </div>
-
-            <div className="pt-7">
-              <p className="section-label">Stay updated</p>
-              <p className="mt-3 max-w-md text-sm leading-6 text-black/60">
-                Occasional project stories, material studies and studio news. No
-                clutter.
-              </p>
-              <form
-                className="newsletter-form mt-5 flex items-center border-b border-black/40"
-                onSubmit={(event) => event.preventDefault()}
-              >
-                <input
-                  type="email"
-                  required
-                  aria-label="Email address"
-                  placeholder="Your email address"
-                  className="min-w-0 flex-1 bg-transparent py-4 text-base outline-none placeholder:text-black/35"
-                />
-                <button
-                  type="submit"
-                  className="newsletter-button flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/35"
-                  aria-label="Subscribe"
-                >
-                  <Arrow />
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 grid gap-8 border-t border-black/20 pt-6 md:grid-cols-12 md:items-end">
-          <div className="grid grid-cols-2 gap-6 text-xs leading-5 text-black/55 md:col-span-5 md:grid-cols-3">
-            <p>
-              Mumbai
-              <br />
-              India
-            </p>
-            <p>
-              New Delhi
-              <br />
-              India
-            </p>
-            <p>
-              <a href="#">Instagram</a>
-              <br />
-              <a href="#">LinkedIn</a>
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-[9px] uppercase tracking-[0.15em] text-black/50 md:col-span-4 md:justify-center">
-            <Link href="/about">About</Link>
-            <Link href="/projects">Projects</Link>
-            <Link href="/careers">Careers</Link>
-            <a href="#">Privacy</a>
-          </div>
-          <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">
-            © 2026 AXIS Architecture. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

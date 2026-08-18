@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 function Arrow() {
-  return <span aria-hidden="true" className="text-[1.05em]">-&gt;</span>;
+  return <span aria-hidden="true" className="text-[1.05em]">&#8599;</span>;
 }
 
 function buildGallery(project) {

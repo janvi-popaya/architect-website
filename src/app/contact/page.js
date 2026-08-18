@@ -2,19 +2,20 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { BrandLogo } from '@/components/brand-logo';
+import { SiteFooter as SharedFooter } from '@/components/site-frame';
 
 const aboutMenu = [
   { title: 'Team', desc: 'People behind the work', href: '/team' },
   { title: 'Clients', desc: 'Collaborators and partnerships', href: '/clients' },
-  { title: 'Careers', desc: 'Open roles and internships', href: '/careers' },
 ];
 
 function Arrow() {
-  return <span aria-hidden="true" className="text-[1.05em]">↗</span>;
+  return <span aria-hidden="true" className="text-[1.05em]">&#8599;</span>;
 }
 
 function Chevron({ side = false }) {
-  return <span aria-hidden="true" className={`text-[9px] transition-transform duration-300 ${side ? 'ml-auto -rotate-90' : 'ml-1 group-hover:rotate-180'}`}>⌄</span>;
+  return <span aria-hidden="true" className={`text-[9px] transition-transform duration-300 ${side ? 'ml-auto -rotate-90' : 'ml-1 group-hover:rotate-180'}`}>&#8964;</span>;
 }
 
 function Dropdown({ label, items, eyebrow, href = '#about' }) {
@@ -47,7 +48,7 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 text-white">
       <div className="nav-shell mx-4 mt-4 flex h-14 items-center justify-between rounded-full border border-white/20 bg-[#11110f]/90 px-5 md:mx-7 md:mt-5 md:h-16 md:px-7">
-        <Link href="/" className="text-[12px] font-semibold tracking-[0.2em]">AXIS</Link>
+        <BrandLogo />
         <nav className="hidden h-full items-center gap-8 md:flex">
           <Link href="/projects" className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">Projects</Link>
           <Link href="/about" className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">About</Link>
@@ -73,7 +74,7 @@ function SiteFooter() {
         <div className="md:col-span-7">
           <p className="section-label">Start a conversation</p>
           <h2 className="mt-5 text-[13vw] leading-[0.82] tracking-[-0.07em] md:text-[7.5vw]">Have a site?<br /><span className="serif italic text-black/50">Let&apos;s talk.</span></h2>
-          <a href="mailto:hello@axis.studio" className="group mt-8 inline-flex items-center gap-4 border-b border-black/35 pb-2 text-lg md:text-xl">hello@axis.studio <Arrow /></a>
+          <a href="mailto:vidhi.jadesign@gmail.com" className="group mt-8 inline-flex items-center gap-4 border-b border-black/35 pb-2 text-lg md:text-xl">vidhi.jadesign@gmail.com <Arrow /></a>
         </div>
         <div className="md:col-span-5 md:pt-1">
           <div className="border-b border-black/25 pb-7">
@@ -95,12 +96,12 @@ function SiteFooter() {
         <div className="grid grid-cols-2 gap-6 text-xs leading-5 text-black/55 md:col-span-5 md:grid-cols-3">
           <p>Mumbai<br />India</p>
           <p>New Delhi<br />India</p>
-          <p><a href="#">Instagram</a><br /><a href="#">LinkedIn</a></p>
+          <p><a href="https://www.instagram.com/joeysatelier/" target="_blank" rel="noreferrer">@joeysatelier</a></p>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-[9px] uppercase tracking-[0.15em] text-black/50 md:col-span-4 md:justify-center">
-          <Link href="/about">About</Link><Link href="/projects">Projects</Link><Link href="/careers">Careers</Link><a href="#">Privacy</a>
+          <Link href="/about">About</Link><Link href="/projects">Projects</Link><a href="#">Terms</a><a href="#">Privacy</a>
         </div>
-        <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">© 2026 AXIS Architecture. All rights reserved.</p>
+        <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">© 2026 Joey&apos;s Atelier. All rights reserved.</p>
       </div>
     </footer>
   );
@@ -111,6 +112,23 @@ export default function ContactPage() {
   const [mobileSection, setMobileSection] = useState(null);
 
   const toggleSection = (name) => setMobileSection(mobileSection === name ? null : name);
+  const sendEnquiry = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const subject = encodeURIComponent(`Project enquiry — ${formData.get('name')}`);
+    const body = encodeURIComponent([
+      `Name: ${formData.get('name')}`,
+      `Email / Phone: ${formData.get('contact')}`,
+      `Project Type: ${formData.get('projectType')}`,
+      `Project Location: ${formData.get('location')}`,
+      `Approximate Area: ${formData.get('area') || 'Not specified'}`,
+      '',
+      'Project Brief:',
+      formData.get('projectBrief'),
+    ].join('\n'));
+
+    window.location.href = `mailto:vidhi.jadesign@gmail.com?subject=${subject}&body=${body}`;
+  };
 
   return (
     <main className="overflow-hidden">
@@ -144,71 +162,56 @@ export default function ContactPage() {
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-black/60 md:text-[15px]">Whether it&apos;s architecture, interiors, or a new collaboration, start here and we&apos;ll take it from there.</p>
           </div>
 
-          <form className="mt-10 rounded-[32px] border border-black/10 bg-[#ece6db] p-5 shadow-[0_20px_60px_rgba(17,17,15,0.08)] md:p-8">
+          <form onSubmit={sendEnquiry} className="mt-10 rounded-[32px] border border-black/10 bg-[#ece6db] p-5 shadow-[0_20px_60px_rgba(17,17,15,0.08)] md:p-8">
             <div className="grid gap-4 md:grid-cols-2">
-              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Name <input className="border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" type="text" placeholder="Your name" /></label>
-              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Email <input className="border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" type="email" placeholder="you@example.com" /></label>
+              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Name <input name="name" required className="border-b border-black/20 bg-transparent py-3 text-base normal-case tracking-normal outline-none placeholder:text-black/30" type="text" placeholder="Your name" /></label>
+              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Email / Phone <input name="contact" required className="border-b border-black/20 bg-transparent py-3 text-base normal-case tracking-normal outline-none placeholder:text-black/30" type="text" placeholder="Your email address or phone number" /></label>
             </div>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Project type <input className="border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" type="text" placeholder="Architecture, interiors, advisory..." /></label>
-              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Timeline <input className="border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" type="text" placeholder="When are you planning to begin?" /></label>
+            <fieldset className="mt-7 border-b border-black/20 pb-5">
+              <legend className="text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Project Type</legend>
+              <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3">
+                {['Residential', 'Commercial', 'Other'].map((type) => (
+                  <label key={type} className="flex cursor-pointer items-center gap-3 text-sm text-black/70">
+                    <input required type="radio" name="projectType" value={type} className="h-4 w-4 accent-black" />
+                    {type}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Project Location <input name="location" required className="border-b border-black/20 bg-transparent py-3 text-base normal-case tracking-normal outline-none placeholder:text-black/30" type="text" placeholder="City, area or site location" /></label>
+              <label className="grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Approximate Area <input name="area" className="border-b border-black/20 bg-transparent py-3 text-base normal-case tracking-normal outline-none placeholder:text-black/30" type="text" placeholder="Area in sq. ft." /></label>
             </div>
-            <label className="mt-4 grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Message <textarea className="min-h-[180px] border-b border-black/20 bg-transparent py-3 text-base outline-none placeholder:text-black/30" placeholder="Tell us about your site, location, goals, and anything else we should know." /></label>
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 pt-5">
-              <p className="text-[10px] uppercase tracking-[0.18em] text-black/45">We usually reply within 2 business days.</p>
-              <button type="submit" className="contact-pill inline-flex items-center gap-2 rounded-full border border-black/35 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-black hover:text-white">Send message <Arrow /></button>
+            <label className="mt-5 grid gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-black/50">Tell us briefly about your project <textarea name="projectBrief" required className="min-h-[180px] border-b border-black/20 bg-transparent py-3 text-base normal-case tracking-normal outline-none placeholder:text-black/30" placeholder="Share the project requirements, goals and anything else we should know." /></label>
+            <div className="mt-6 flex justify-end border-t border-black/10 pt-5">
+              <button type="submit" className="inline-flex items-center gap-2 rounded-full border border-black/35 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors hover:border-black/15 hover:bg-[#d8d5cf] hover:text-[#11110f]">Send enquiry <Arrow /></button>
             </div>
           </form>
         </div>
       </section>
 
       <section className="px-5 pb-14 md:px-10 md:pb-18">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-4xl">
           <div className="mb-6 border-b border-black/15 pb-4">
-            <p className="section-label">Our office</p>
-            <h2 className="mt-3 text-3xl tracking-[-0.04em] md:text-5xl">Visit, call, or find us on the map.</h2>
+            <p className="section-label">Contact details</p>
+            <h2 className="mt-3 text-3xl tracking-[-0.04em] md:text-5xl">Reach Joey&apos;s Atelier directly.</h2>
           </div>
-
-          <div className="grid gap-5 md:grid-cols-12 md:gap-6">
-            <a href="https://maps.google.com/?q=Mumbai+India" target="_blank" rel="noreferrer" className="group rounded-[28px] border border-black/10 bg-white/70 p-6 transition-transform hover:-translate-y-1 md:col-span-5">
-              <div className="flex items-start justify-between gap-6">
-                <div>
-                  <p className="section-label">Mumbai studio</p>
-                  <p className="mt-4 text-2xl tracking-[-0.04em] md:text-3xl">Andheri West, Mumbai</p>
-                  <p className="mt-3 max-w-sm text-sm leading-6 text-black/60">Open for meetings by appointment. Click the pin to open the location in Maps.</p>
-                </div>
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 bg-[#11110f] text-white transition-transform group-hover:-translate-y-1" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
-                    <circle cx="12" cy="10" r="2.5" />
-                  </svg>
-                </span>
-              </div>
-              <p className="mt-5 text-[10px] uppercase tracking-[0.18em] text-black/45">Open in Google Maps</p>
+          <div className="grid gap-5 md:grid-cols-2">
+            <a href="mailto:vidhi.jadesign@gmail.com" className="group rounded-[28px] border border-black/10 bg-white/70 p-6 transition-transform hover:-translate-y-1">
+              <p className="section-label">Email</p>
+              <p className="mt-4 break-all text-xl tracking-[-0.04em] md:text-2xl">vidhi.jadesign@gmail.com</p>
+              <span className="mt-8 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em]">Write to us <Arrow /></span>
             </a>
-
-            <div className="grid gap-5 md:col-span-7">
-              <div className="rounded-[28px] border border-black/10 bg-[#ece6db] p-6">
-                <p className="section-label">Phone</p>
-                <a href="tel:+919876543210" className="mt-4 block text-2xl tracking-[-0.04em] md:text-3xl">+91 98765 43210</a>
-                <p className="mt-3 text-sm leading-6 text-black/60">Available Monday to Friday, 10:00 AM to 6:00 PM.</p>
-              </div>
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="rounded-[28px] border border-black/10 bg-white/60 p-6">
-                  <p className="section-label">Email</p>
-                  <a href="mailto:hello@axis.studio" className="mt-4 block text-2xl tracking-[-0.04em] md:text-3xl">hello@axis.studio</a>
-                </div>
-                <div className="rounded-[28px] border border-black/10 bg-white/60 p-6">
-                  <p className="section-label">Response</p>
-                  <p className="mt-4 text-2xl tracking-[-0.04em] md:text-3xl">2 business days</p>
-                </div>
-              </div>
-            </div>
+            <a href="https://www.instagram.com/joeysatelier/" target="_blank" rel="noreferrer" className="group rounded-[28px] border border-black/10 bg-[#ece6db] p-6 transition-transform hover:-translate-y-1">
+              <p className="section-label">Instagram</p>
+              <p className="mt-4 text-2xl tracking-[-0.04em] md:text-3xl">@joeysatelier</p>
+              <span className="mt-8 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em]">View profile <Arrow /></span>
+            </a>
           </div>
         </div>
       </section>
 
-      <SiteFooter />
+      <SharedFooter />
     </main>
   );
 }

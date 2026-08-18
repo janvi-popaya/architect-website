@@ -2,19 +2,20 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { BrandLogo } from '@/components/brand-logo';
+import { SiteFooter as SharedFooter } from '@/components/site-frame';
 
 const aboutMenu = [
   { title: 'Team', desc: 'People behind the work', href: '/team' },
   { title: 'Clients', desc: 'Collaborators and partnerships', href: '/clients' },
-  { title: 'Careers', desc: 'Open roles and internships', href: '/careers' },
 ];
 
 function Arrow() {
-  return <span aria-hidden="true" className="text-[1.05em]">↗</span>;
+  return <span aria-hidden="true" className="text-[1.05em]">&#8599;</span>;
 }
 
 function Chevron({ side = false }) {
-  return <span aria-hidden="true" className={`text-[9px] transition-transform duration-300 ${side ? 'ml-auto -rotate-90' : 'ml-1 group-hover:rotate-180'}`}>⌄</span>;
+  return <span aria-hidden="true" className={`text-[9px] transition-transform duration-300 ${side ? 'ml-auto -rotate-90' : 'ml-1 group-hover:rotate-180'}`}>&#8964;</span>;
 }
 
 function Dropdown({ label, items, eyebrow, href = '#about' }) {
@@ -47,7 +48,7 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 text-white">
       <div className="nav-shell mx-4 mt-4 flex h-14 items-center justify-between rounded-full border border-white/20 bg-[#11110f]/90 px-5 md:mx-7 md:mt-5 md:h-16 md:px-7">
-        <Link href="/" className="text-[12px] font-semibold tracking-[0.2em]">AXIS</Link>
+        <BrandLogo />
         <nav className="hidden h-full items-center gap-8 md:flex">
           <Link href="/projects" className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">Projects</Link>
           <Link href="/about" className="nav-trigger flex h-full items-center text-[10px] font-semibold uppercase tracking-[0.16em]">About</Link>
@@ -73,7 +74,7 @@ function SiteFooter() {
         <div className="md:col-span-7">
           <p className="section-label">Start a conversation</p>
           <h2 className="mt-5 text-[13vw] leading-[0.82] tracking-[-0.07em] md:text-[7.5vw]">Have a site?<br /><span className="serif italic text-black/50">Let&apos;s talk.</span></h2>
-          <a href="mailto:hello@axis.studio" className="group mt-8 inline-flex items-center gap-4 border-b border-black/35 pb-2 text-lg md:text-xl">hello@axis.studio <Arrow /></a>
+          <a href="mailto:vidhi.jadesign@gmail.com" className="group mt-8 inline-flex items-center gap-4 border-b border-black/35 pb-2 text-lg md:text-xl">vidhi.jadesign@gmail.com <Arrow /></a>
         </div>
         <div className="md:col-span-5 md:pt-1">
           <div className="border-b border-black/25 pb-7">
@@ -95,12 +96,12 @@ function SiteFooter() {
         <div className="grid grid-cols-2 gap-6 text-xs leading-5 text-black/55 md:col-span-5 md:grid-cols-3">
           <p>Mumbai<br />India</p>
           <p>New Delhi<br />India</p>
-          <p><a href="#">Instagram</a><br /><a href="#">LinkedIn</a></p>
+          <p><a href="https://www.instagram.com/joeysatelier/" target="_blank" rel="noreferrer">@joeysatelier</a></p>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-[9px] uppercase tracking-[0.15em] text-black/50 md:col-span-4 md:justify-center">
-          <Link href="/about">About</Link><Link href="/projects">Projects</Link><Link href="/careers">Careers</Link><a href="#">Privacy</a>
+          <Link href="/about">About</Link><Link href="/projects">Projects</Link><a href="#">Terms</a><a href="#">Privacy</a>
         </div>
-        <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">© 2026 AXIS Architecture. All rights reserved.</p>
+        <p className="text-[9px] uppercase tracking-[0.16em] text-black/50 md:col-span-3 md:text-right">© 2026 Joey&apos;s Atelier. All rights reserved.</p>
       </div>
     </footer>
   );
@@ -162,7 +163,7 @@ export default function TeamPage() {
                       <h3 className="mt-3 text-2xl tracking-[-0.04em] md:text-3xl">{member.name}</h3>
                       <p className="mt-3 text-sm leading-6 text-black/60">{member.location}</p>
                     </div>
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 bg-[#11110f] text-white transition-transform group-hover:rotate-12">↗</span>
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/15 bg-[#11110f] text-white transition-transform group-hover:rotate-12">&#8599;</span>
                   </div>
                 </div>
               </article>
@@ -187,7 +188,7 @@ export default function TeamPage() {
         </div>
       </section>
 
-      <SiteFooter />
+      <SharedFooter />
     </main>
   );
 }

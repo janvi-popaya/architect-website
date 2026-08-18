@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'AXIS — Architecture & Spatial Design',
+  title: "Joey's Atelier — Architecture & Spatial Design",
   description: 'Contemporary architecture shaped by culture, climate and everyday life.',
 };
 

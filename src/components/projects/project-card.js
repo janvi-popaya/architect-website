@@ -15,7 +15,7 @@ export function ProjectCard({ project, className = '' }) {
               <h2 className="text-2xl tracking-[-0.04em] md:text-3xl">{project.title}</h2>
               <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-white/60">{project.location}</p>
             </div>
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/30 transition group-hover:rotate-45 group-hover:bg-white group-hover:text-black" aria-hidden="true">↗</span>
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/30 transition group-hover:rotate-45 group-hover:bg-white group-hover:text-black" aria-hidden="true">&#8599;</span>
           </div>
         </div>
       </article>

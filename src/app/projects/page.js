@@ -8,24 +8,18 @@ import { ProjectCard } from '@/components/projects/project-card';
 export default function ProjectsPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState(null);
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('residential-interiors');
   const [isSwitching, setIsSwitching] = useState(false);
-  const mixedProjects = useMemo(
-    () => [
-      ...projects.filter((project) => project.group === 'Architecture').slice(0, 6),
-      ...projects.filter((project) => project.group === 'Interiors'),
-    ],
-    [],
-  );
   const filteredProjects = useMemo(() => {
-    if (activeCategory === 'all') return mixedProjects;
-    return mixedProjects.filter((project) => project.group.toLowerCase() === activeCategory);
-  }, [activeCategory, mixedProjects]);
+    return projects.filter((project) => project.filterCategory === activeCategory);
+  }, [activeCategory]);
   const spans = ['md:col-span-7', 'md:col-span-5', 'md:col-span-5', 'md:col-span-7', 'md:col-span-6', 'md:col-span-6'];
   const categories = [
-    { label: 'All', value: 'all' },
+    { label: 'Residential Interiors', value: 'residential-interiors' },
+    { label: 'Commercial Interiors', value: 'commercial-interiors' },
     { label: 'Architecture', value: 'architecture' },
-    { label: 'Interiors', value: 'interiors' },
+    { label: 'Renovation & Transformation', value: 'renovation-transformation' },
+    { label: 'Design Consultation', value: 'design-consultation' },
   ];
   const changeCategory = (value) => {
     setIsSwitching(true);
@@ -53,18 +47,18 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="px-5 py-6 md:px-10 md:py-8">
-        <div className="mx-auto flex max-w-7xl flex-wrap gap-3">
+      <section className="px-5 py-5 md:px-10 md:py-6">
+        <div className="project-filter-rail mx-auto flex max-w-7xl flex-nowrap gap-1.5 overflow-x-auto rounded-full border border-black/10 bg-white/50 p-1.5 shadow-[0_12px_35px_rgba(17,17,15,0.06)] md:justify-center">
           {categories.map((category) => (
             <button
               key={category.label}
               type="button"
               onClick={() => changeCategory(category.value)}
               aria-pressed={activeCategory === category.value}
-              className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black ${
+              className={`shrink-0 snap-start rounded-full border px-3.5 py-2 text-[9px] font-semibold uppercase tracking-[0.13em] transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black ${
                 activeCategory === category.value
-                  ? 'border-black bg-white text-black shadow-[0_10px_30px_rgba(17,17,15,0.08)]'
-                  : 'border-black/15 bg-white/70 text-gray/70 hover:border-black/30 hover:bg-black/30 hover:text-gray'
+                  ? 'border-[#11110f] bg-[#11110f] text-white shadow-[0_8px_20px_rgba(17,17,15,0.16)]'
+                  : 'border-transparent bg-transparent text-black/55 hover:border-black/10 hover:bg-white/80 hover:text-black'
               }`}
             >
               {category.label}
@@ -80,6 +74,11 @@ export default function ProjectsPage() {
               <ProjectCard project={project} />
             </div>
           ))}
+          {filteredProjects.length === 0 && (
+            <div className="border-t border-black/15 py-12 md:col-span-12">
+              <p className="text-sm text-black/50">Projects in this category will be added soon.</p>
+            </div>
+          )}
         </div>
       </section>
       <SiteFooter />

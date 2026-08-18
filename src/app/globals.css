@@ -58,6 +58,8 @@ button { font:inherit; color:inherit; }
 .contact-pill:hover span { color:#11110f; }
 .view-all-link { border-bottom:1px solid rgba(17,17,15,.4); padding-bottom:5px; transition:gap .25s ease,border-color .25s ease; }
 .view-all-link:hover { gap:16px; border-color:rgba(17,17,15,.9); }
+.project-filter-rail { scrollbar-width:none; scroll-snap-type:x proximity; overscroll-behavior-x:contain; }
+.project-filter-rail::-webkit-scrollbar { display:none; }
 .newsletter-button { transition:transform .3s ease,background-color .3s ease,color .3s ease; }
 .newsletter-form:focus-within .newsletter-button,.newsletter-button:hover { transform:rotate(45deg); background:#11110f; color:#f3f0e9; }
 footer a { transition:opacity .25s ease; }
